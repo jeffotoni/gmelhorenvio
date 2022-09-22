@@ -2,6 +2,7 @@ package auth
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 	"os"
 
@@ -10,12 +11,14 @@ import (
 )
 
 func LoadCredentials() (cred *ApiCredentials, err error) {
-	if usingAws() {
+	if fileExist(config.MELHORENVIO_CREDENTIALS_FILE) {
+		log.Println("loading credentials locally")
+		cred, err = loadCredentialsLocal()
+	} else if usingAws() {
 		log.Println("loading credentials from aws")
 		cred, err = loadCredentialsAws()
 	} else {
-		log.Println("loading credentials locally")
-		cred, err = loadCredentialsLocal()
+		err = errors.New("I didn't find options to read credentials")
 	}
 
 	if err != nil {

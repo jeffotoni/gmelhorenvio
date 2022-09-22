@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"os"
 	"strings"
 	"time"
 
@@ -91,4 +92,12 @@ func zlog(dfLog *zerolog.Event, code int, body []byte) *zerolog.Event {
 	return dfLog.
 		Int("Status-Code", code).
 		RawJSON("Response-Body", body)
+}
+
+func fileExist(name string) bool {
+	//if _, err := os.Stat(name); os.IsNotExist(err) {
+	if stat, err := os.Stat(name); err == nil && !stat.IsDir() {
+		return true
+	}
+	return false
 }
