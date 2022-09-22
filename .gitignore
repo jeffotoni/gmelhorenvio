@@ -1,0 +1,5 @@
+.vscode
+./cmd/credentials/credentials.json
+/cmd/credentials/credentials.json
+cmd/credentials/credentials.json
+credentials.json
