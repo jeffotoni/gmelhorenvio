@@ -58,7 +58,9 @@ func GetToken() (cred *ApiCredentials, err error) {
 		"redirect_uri":  {config.MELHORENVIO_REDIRECT_URI},
 		"code":          {config.MELHORENVIO_CODE},
 	}
+	println("..........................................................")
 	fmt.Println("Form data:", formData)
+	println("..........................................................")
 
 	payload := strings.NewReader(formData.Encode())
 	req, err := http.NewRequestWithContext(
