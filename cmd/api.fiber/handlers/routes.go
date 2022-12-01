@@ -10,9 +10,10 @@ import (
 	"github.com/jeffotoni/gmelhorenvio/config"
 	hd "github.com/jeffotoni/gmelhorenvio/internal/fiber/headers"
 	mw "github.com/jeffotoni/gmelhorenvio/internal/fiber/middleware"
+	pg "github.com/jeffotoni/gmelhorenvio/internal/psql"
 )
 
-func SetRoutes(r fiber.Router) {
+func SetRoutes(r fiber.Router, dbLog *pg.DbConnection) {
 	lim := limiter.New(limiter.Config{
 		Next:       nil,
 		Max:        config.LIMITER_MAX_REQUESTS,
@@ -35,5 +36,5 @@ func SetRoutes(r fiber.Router) {
 
 	// go-cache need to implement in config cache
 	freteG := r.Group("/frete", mw.UseCache)
-	freteG.Post("/calc", frete.PostCalc)
+	freteG.Post("/calc", frete.PostCalc(dbLog))
 }
