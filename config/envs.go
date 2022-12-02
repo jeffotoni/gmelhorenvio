@@ -7,7 +7,8 @@ import (
 )
 
 var (
-	ENV_AMBI         = env.GetString("ENV_AMBI", "dev") // dev | prod | local
+	ENV_AMBI         = env.GetString("ENV_AMBI", "dev") // dev | prod
+	DB_INSERT_LOG    = env.GetBool("DB_INSERT_LOG", false)
 	SERVER_DOMAIN    = env.GetString("SERVER_DOMAIN", "0.0.0.0:8080")
 	API_TEST_PORT    = env.GetString("API_TEST_PORT", "8081")
 	TLS_SECURE       = env.GetBool("TLS_SECURE", true)

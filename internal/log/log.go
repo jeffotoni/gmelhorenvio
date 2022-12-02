@@ -13,8 +13,8 @@ var (
 	ErrStatus = "ERROR"
 )
 
-func InsertLogMelhorEnvio(db *pg.DbConnection, status, msg, rawJson string) {
-	if strings.ToLower(config.ENV_AMBI) == "local" {
+func InsertLogMelhorEnvio(db *pg.DbConnection, status, service, msg, rawJson string) {
+	if !config.DB_INSERT_LOG {
 		return
 	}
 
@@ -23,12 +23,14 @@ func InsertLogMelhorEnvio(db *pg.DbConnection, status, msg, rawJson string) {
 	query := fmts.ConcatStr(`
 		INSERT INTO melhorenvio_log_`, strings.ToLower(config.ENV_AMBI), ` (
 			log_status,
+			log_ecommerce,
 			log_msg,
 			log_json
 		) VALUES (
 			$1, 
 			$2,
-			$3
+			$3,
+			$4
 		)
 	`)
 
@@ -37,6 +39,7 @@ func InsertLogMelhorEnvio(db *pg.DbConnection, status, msg, rawJson string) {
 			*db.Ctx,
 			query,
 			status,
+			service,
 			msg,
 			rawJson,
 		)

@@ -15,9 +15,14 @@ import (
 
 func PostCalc(dbLog *pg.DbConnection) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		service := c.Get("X-Ecommerce")
+		if service == "" {
+			return c.Status(http.StatusBadRequest).JSON(models.NewHttpErrStr("must provide 'Ecommerce' header"))
+		}
+
 		respBody, code, err := frete.Calc(c.Body())
 		if err != nil {
-			log.InsertLogMelhorEnvio(dbLog, log.ErrStatus, "error frete.Calc", string(c.Body()))
+			log.InsertLogMelhorEnvio(dbLog, log.ErrStatus, service, "error frete.Calc", string(c.Body()))
 			return c.Status(code).JSON(models.NewHttpErr(err))
 		}
 
@@ -25,13 +30,13 @@ func PostCalc(dbLog *pg.DbConnection) fiber.Handler {
 		if code == http.StatusUnauthorized {
 			_, err := auth.RefreshToken()
 			if err != nil {
-				log.InsertLogMelhorEnvio(dbLog, log.ErrStatus, "error auth.RefreshToken", string(c.Body()))
+				log.InsertLogMelhorEnvio(dbLog, log.ErrStatus, service, "error auth.RefreshToken", string(c.Body()))
 				return c.Status(http.StatusInternalServerError).JSON(models.NewHttpErr(err))
 			}
 
 			respBody, code, err = frete.Calc(c.Body())
 			if err != nil {
-				log.InsertLogMelhorEnvio(dbLog, log.ErrStatus, "error frete.Calc", string(c.Body()))
+				log.InsertLogMelhorEnvio(dbLog, log.ErrStatus, service, "error frete.Calc", string(c.Body()))
 				return c.Status(code).JSON(models.NewHttpErr(err))
 			}
 		}
