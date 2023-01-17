@@ -1,11 +1,8 @@
 package auth
 
 import (
-	"encoding/base64"
-	"encoding/json"
 	"errors"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/jeffotoni/gmelhorenvio/config"
@@ -37,24 +34,24 @@ func (cred *ApiCredentials) IsValid() bool {
 		return false
 	}
 
-	tkParts := strings.Split(cred.AccessToken, ".")
-	if len(tkParts) != 3 {
-		return false
-	}
+	// tkParts := strings.Split(cred.AccessToken, ".")
+	// if len(tkParts) != 3 {
+	// 	return false
+	// }
 
-	rawAccessTk, err := base64.StdEncoding.DecodeString(tkParts[1])
-	if err != nil {
-		return false
-	}
+	// rawAccessTk, err := base64.StdEncoding.DecodeString(tkParts[1])
+	// if err != nil {
+	// 	return false
+	// }
 
-	var accessTk accessToken
-	if err := json.Unmarshal(rawAccessTk, &accessTk); err != nil {
-		return false
-	}
+	// var accessTk accessToken
+	// if err := json.Unmarshal(rawAccessTk, &accessTk); err != nil {
+	// 	return false
+	// }
 
-	if accessTk.Aud != config.MELHORENVIO_CLIENT_ID {
-		return false
-	}
+	// if accessTk.Aud != config.MELHORENVIO_CLIENT_ID {
+	// 	return false
+	// }
 
 	return true
 }
