@@ -1,5 +1,6 @@
 # Go Melhor Envio
 Esta api faz busca na plataforma [rastreio melhor envio](melhorenvio.com.br) para calculos de frete em diversas outra plataformas dentre elas o correio.
+new version
  
 ## Docker
 
