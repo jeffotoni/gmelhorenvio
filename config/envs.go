@@ -36,7 +36,7 @@ var (
 
 	MELHORENVIO_PROTOCOL         = env.GetString("MELHORENVIO_PROTOCOL", "https")
 	MELHORENVIO_HOST             = env.GetString("MELHORENVIO_HOST", "sandbox.melhorenvio.com.br")
-	MELHORENVIO_USER_AGENT       = env.GetString("MELHORENVIO_USER_AGENT", `Monge Embalagens ("user@gmail.com")`)
+	MELHORENVIO_USER_AGENT       = env.GetString("MELHORENVIO_USER_AGENT", `Monge Embalagens Online (contato@mongeembalagens.com.br)`)
 	MELHORENVIO_CREDENTIALS_FILE = env.GetString("MELHORENVIO_CREDENTIALS_FILE", "./cmd/credentials/credentials.json")
 
 	MELHORENVIO_ENDPOINT_GET_TOKEN = env.GetString(
